@@ -8,7 +8,9 @@ function Footer() {
   return (
     <footer>
       <Container>
-        <Box sx={{ textAlign: "center", marginTop: "50px" }}>
+        <Box
+          sx={{ textAlign: "center", marginTop: "50px", paddingBottom: "10px" }}
+        >
           <Typography>
             3MTT Project &copy; 2024 <Link href="#">Lawson Godgive</Link>
           </Typography>

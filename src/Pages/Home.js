@@ -24,11 +24,14 @@ function Home() {
 
       // get the data using fetch or axios method
       // let repo = await fetch("https://api.github.com/users/chukwu-godgive/repos").then((res) => { return(res.json())})
-      let repo = await axios.get(
-        "https://api.github.com/users/chukwu-godgive/repos"
-      );
-      setRepoList(repo.data);
-      console.log(repo);
+      try {
+        let repo = await axios.get(
+          "https://api.github.com/users/chukwu-godgive/repos"
+        );
+        setRepoList(repo.data);
+      } catch (error) {
+        console.log(error.message);
+      }
 
       // after getting the response
       setLoading(false);
@@ -57,16 +60,18 @@ function Home() {
             }}
           >
             {loading ? (
-              <h4>Loading . . .</h4>
+              <h2
+                style={{
+                  margin: "0 auto",
+                  textAlign: "center",
+                  padding: "5rem",
+                }}
+              >
+                Loading . . .
+              </h2>
             ) : (
               repoList.map((repo, index) => (
                 <Card sx={{ width: 345 }} key={index}>
-                  {/* <CardMedia
-                    component="img"
-                    height="140"
-                    image=""
-                    alt="green iguana"
-                  /> */}
                   <CardActionArea>
                     <CardContent>
                       <Typography gutterBottom variant="h5" component="div">
@@ -92,23 +97,27 @@ function Home() {
               ))
             )}
           </Box>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              gap: "20px",
-              alignItems: "center",
-              paddingTop: "50px",
-            }}
-          >
-            <Button variant="contained">Previous</Button>
-            <Button variant="contained">Next</Button>
-          </Box>
+          {loading === true || repoList.length === 0 ? null : (
+            <>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  gap: "20px",
+                  alignItems: "center",
+                  paddingTop: "50px",
+                }}
+              >
+                <Button variant="contained">Previous</Button>
+                <Button variant="contained">Next</Button>
+              </Box>
+
+              {/* footer section  */}
+              <Footer />
+            </>
+          )}
         </Container>
       </section>
-
-      {/* footer section  */}
-      <Footer />
     </>
   );
 }
