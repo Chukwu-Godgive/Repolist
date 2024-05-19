@@ -30,7 +30,7 @@ function Home() {
         );
         setRepoList(repo.data);
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
 
       // after getting the response
@@ -89,9 +89,7 @@ function Home() {
                     </CardContent>
                   </CardActionArea>
                   <CardActions>
-                    <Button size="small" color="primary">
-                      View
-                    </Button>
+                    <Button size="small" color="primary"><Link href={`/repo/${repo.name}`}>View</Link></Button>
                   </CardActions>
                 </Card>
               ))
