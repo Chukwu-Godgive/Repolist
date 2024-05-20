@@ -6,9 +6,9 @@ function App() {
   return (
     <Routes>
       <Route exact path="/" element={<Home />} />
-      <Route exact path="/home" element={<Home />} />
+      <Route exact path="home" element={<Home />} />
       {/* "*" path targets all the non existing pages  */}
-      <Route exact path="*" element={<Error />} />
+      <Route exact path="/*" element={<Error />} />
     </Routes>
   );
 }
