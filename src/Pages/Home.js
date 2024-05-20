@@ -89,7 +89,14 @@ function Home() {
                     </CardContent>
                   </CardActionArea>
                   <CardActions>
-                    <Button size="small" color="primary"><Link href={`/repo/${repo.name}`}>View</Link></Button>
+                    <Button size="small" color="primary">
+                      <Link
+                        href={`/repo/${repo.name}`}
+                        sx={{ textDecoration: "none", color: "#1976d2" }}
+                      >
+                        View
+                      </Link>
+                    </Button>
                   </CardActions>
                 </Card>
               ))

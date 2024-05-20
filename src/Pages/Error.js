@@ -1,4 +1,4 @@
-// Repo
+// Error
 import { Container, Box, Typography } from "@mui/material";
 import Footer from "../Components/Footer";
 import Navbar from "../Components/Navbar";
