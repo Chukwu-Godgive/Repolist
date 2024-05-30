@@ -10,34 +10,57 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Footer from "../Components/Footer";
 import Navbar from "../Components/Navbar";
+import { parseLinkHeader } from "@web3-storage/parse-link-header";
 
 function Home() {
   // manage my states
   const [loading, setLoading] = useState(false);
   const [repoList, setRepoList] = useState([]);
+  const [pageNo, setPageNo] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [parsedLinkResult, setParsedLinkResult] = useState();
 
   // fetch my repo list using useEffect
-  useEffect(() => {
-    const getRepo = async () => {
-      // set page to loading ... while waiting for the response
-      setLoading(true);
+  const getRepo = async () => {
+    // set page to loading ... while waiting for the response
+    setLoading(true);
 
-      // get the data using fetch or axios method
-      // let repo = await fetch("https://api.github.com/users/chukwu-godgive/repos").then((res) => { return(res.json())})
-      try {
-        let repo = await axios.get(
-          "https://api.github.com/users/chukwu-godgive/repos"
-        );
-        setRepoList(repo.data);
-      } catch (error) {
-        // console.log(error.message);
+    // get the data using fetch or axios method
+    try {
+      let repo = await axios.get(
+        `https://api.github.com/users/chukwu-godgive/repos?per_page=12&page=${currentPage}`
+      );
+      setRepoList(repo.data);
+
+      // Parse the header link to get access to the pagination
+      let parsedHeaderLink = parseLinkHeader(repo.headers.link);
+      setParsedLinkResult(parsedHeaderLink);
+
+      if (parsedHeaderLink.next) {
+        setPageNo(parsedHeaderLink.next.page);
       }
+    } catch (error) {
+      // console.log(error.message);
+    }
 
-      // after getting the response
-      setLoading(false);
-    };
+    // after getting the response
+    setLoading(false);
+  };
+
+  useEffect(() => {
     getRepo();
-  }, []);
+  }, [currentPage]);
+
+  // handle pagination buttons for next & previous
+  const nextButton = () => {
+    if (currentPage < pageNo) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const previousButton = () => {
+    setCurrentPage(currentPage - 1);
+  };
 
   return (
     <>
@@ -113,8 +136,24 @@ function Home() {
                   paddingTop: "50px",
                 }}
               >
-                <Button variant="contained">Previous</Button>
-                <Button variant="contained">Next</Button>
+                {parsedLinkResult.prev ? (
+                  <Button variant="contained" onClick={previousButton}>
+                    Previous
+                  </Button>
+                ) : (
+                  <Button variant="contained" disabled>
+                    Previous
+                  </Button>
+                )}
+                {parsedLinkResult.next ? (
+                  <Button variant="contained" onClick={nextButton}>
+                    Next
+                  </Button>
+                ) : (
+                  <Button variant="contained" disabled>
+                    Next
+                  </Button>
+                )}
               </Box>
 
               {/* footer section  */}
