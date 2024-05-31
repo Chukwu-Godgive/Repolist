@@ -4,7 +4,13 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { Button, CardActionArea, CardActions, Input, Link } from "@mui/material";
+import {
+  Button,
+  CardActionArea,
+  CardActions,
+  Input,
+  Link,
+} from "@mui/material";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -49,6 +55,7 @@ function Home() {
 
   useEffect(() => {
     getRepo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
 
   // handle pagination buttons for next & previous
@@ -72,12 +79,23 @@ function Home() {
         <Container
           sx={{ margin: "0 auto", backgroundColor: "smoke", paddingTop: "30" }}
         >
-          <Box sx={{margin: "25px 0 50px", display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center"}}>
+          <Box
+            sx={{
+              margin: "25px 0 50px",
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
             <div>
               <Typography variant="h4">Chukwu Godgive</Typography>
-              <Typography>GitHub Public repository - This is a web application that lists all my public repository.</Typography>
+              <Typography>
+                GitHub Public repository - This is a web application that lists
+                all my public repository.
+              </Typography>
             </div>
-            <Input variant="filled" placeholder="Search"/>
+            <Input variant="filled" placeholder="Search" />
           </Box>
           <Box
             sx={{
